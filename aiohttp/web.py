@@ -6,7 +6,7 @@ import stat
 import sys
 import warnings
 from argparse import ArgumentParser
-from collections import Iterable, MutableMapping
+from collections.abc import Iterable, MutableMapping
 from functools import partial
 from importlib import import_module
 
@@ -454,7 +454,7 @@ def run_app(app, *, host=None, port=None, path=None, sock=None,
             host=host, port=port, path=path, sock=sock,
             backlog=backlog)
         servers = loop.run_until_complete(
-            asyncio.gather(*server_creations, loop=loop)
+            asyncio.gather(*server_creations)
         )
 
         if handle_signals:
@@ -478,7 +478,7 @@ def run_app(app, *, host=None, port=None, path=None, sock=None,
                 srv.close()
                 server_closures.append(srv.wait_closed())
             loop.run_until_complete(
-                asyncio.gather(*server_closures, loop=loop))
+                asyncio.gather(*server_closures))
             loop.run_until_complete(app.shutdown())
             loop.run_until_complete(handler.shutdown(shutdown_timeout))
     finally:

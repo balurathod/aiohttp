@@ -280,7 +280,7 @@ def test_client(loop):
     @asyncio.coroutine
     def go(__param, *args, server_kwargs=None, **kwargs):
 
-        if isinstance(__param, collections.Callable) and \
+        if isinstance(__param, collections.abc.Callable) and \
                 not isinstance(__param, (Application, BaseTestServer)):
             __param = __param(loop, *args, **kwargs)
             kwargs = {}

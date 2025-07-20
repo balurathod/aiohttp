@@ -1,5 +1,6 @@
 import asyncio
 import collections
+from collections.abc import MutableMapping
 import datetime
 import json
 import re
@@ -56,7 +57,7 @@ _FORWARDED_PAIR_RE = re.compile(_FORWARDED_PAIR)
 ############################################################
 
 
-class BaseRequest(collections.MutableMapping, HeadersMixin):
+class BaseRequest(collections.abc.MutableMapping, HeadersMixin):
 
     POST_METHODS = {hdrs.METH_PATCH, hdrs.METH_POST, hdrs.METH_PUT,
                     hdrs.METH_TRACE, hdrs.METH_DELETE}
