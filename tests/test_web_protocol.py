@@ -1,3 +1,5 @@
+"""Tests for aiohttp/server.py"""
+
 import asyncio
 import socket
 from functools import partial
