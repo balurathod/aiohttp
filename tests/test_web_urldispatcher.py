@@ -99,7 +99,7 @@ def test_follow_symlink(tmp_dir_path, loop, test_client, data):
     app = web.Application()
 
     # Register global static route:
-    app.router.add_static('/', tmp_dir_path, follow_symlinks=True)
+    app.router.add_static('/', tmp_dir_path, follow_symlinks=False)
     client = yield from test_client(app)
 
     # Request the root of the static directory.
