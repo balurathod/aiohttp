@@ -457,7 +457,7 @@ def test_add_static_append_version_follow_symlink(router, tmpdir):
     os.symlink(symlink_target_path, symlink_path, True)
 
     # Register global static route:
-    resource = router.add_static('/st', tmp_dir_path, follow_symlinks=True,
+    resource = router.add_static('/st', tmp_dir_path, follow_symlinks=False,
                                  append_version=True)
 
     url = resource.url(

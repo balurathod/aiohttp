@@ -547,7 +547,7 @@ When a symlink from the static directory is accessed, the server responses to
 client with ``HTTP/404 Not Found`` by default. To allow the server to follow
 symlinks, parameter ``follow_symlinks`` should be set to ``True``::
 
-   app.router.add_static('/prefix', path_to_static_folder, follow_symlinks=True)
+   app.router.add_static('/prefix', path_to_static_folder, follow_symlinks=False)
 
 When you want to enable cache busting,
 parameter ``append_version`` can be set to ``True``
