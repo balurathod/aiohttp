@@ -512,11 +512,16 @@ class StaticResource(PrefixResource):
         url = self._prefix + URL(filename).raw_path
         url = URL(url)
         if append_version is True:
+            unresolved_path = self._directory.joinpath(filename)
             try:
                 if filename.startswith('/'):
                     filename = filename[1:]
-                filepath = self._directory.joinpath(filename).resolve()
-                if not self._follow_symlinks:
+                if self._follow_symlinks:
+                    normalized_path = Path(os.path.normpath(unresolved_path))
+                    normalized_path.relative_to(self._directory)
+                    filepath = normalized_path.resolve()
+                else:
+                    filepath = unresolved_path.resolve()
                     filepath.relative_to(self._directory)
             except (ValueError, FileNotFoundError):
                 # ValueError for case when path point to symlink
@@ -576,8 +581,13 @@ class StaticResource(PrefixResource):
     def _handle(self, request):
         filename = request.match_info['filename']
         try:
-            filepath = self._directory.joinpath(filename).resolve()
-            if not self._follow_symlinks:
+            unresolved_path = self._directory.joinpath(filename)
+            if self._follow_symlinks:
+                normalized_path = Path(os.path.normpath(unresolved_path))
+                normalized_path.relative_to(self._directory)
+                filepath = normalized_path.resolve()
+            else:
+                filepath = unresolved_path.resolve()
                 filepath.relative_to(self._directory)
         except (ValueError, FileNotFoundError) as error:
             # relatively safe
